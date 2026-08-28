@@ -32,7 +32,7 @@ mkdir -p ~/bots/mi-discord-bot && cd ~/bots/mi-discord-bot
 cp $(skill-dir)/assets/bot_template.py bot.py
 cat > .env <<'EOF'
 DISCORD_BOT_TOKEN=MTQ4...  # de Discord Developer Portal
-ALLOWED_USERS=602871976784297984
+ALLOWED_USERS=xxxxxxxxxx
 ALLOWED_ROLES=
 ALLOWED_CHANNELS=
 CLI_BACKEND=opencode
