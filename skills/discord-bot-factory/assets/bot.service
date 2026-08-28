@@ -6,7 +6,7 @@ StartLimitIntervalSec=0
 
 [Service]
 Type=simple
-ExecStart=/home/rriostrujillo/.hermes/hermes-agent/venv/bin/python {{BOT_DIR}}/{{BOT_FILE}}
+ExecStart=/home/xxxx/.hermes/hermes-agent/venv/bin/python {{BOT_DIR}}/{{BOT_FILE}}
 WorkingDirectory={{BOT_DIR}}
 Restart=always
 RestartSec=10
