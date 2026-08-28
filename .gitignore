@@ -22,3 +22,4 @@ Thumbs.db
 # Logs
 *.log
 logs/
+app/test-discord-allowlist.py
