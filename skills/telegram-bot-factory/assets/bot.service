@@ -1,0 +1,21 @@
+[Unit]
+Description=Telegram Bot {{BOT_NAME}} — patrones OpenWork/Hermes
+After=network-online.target
+Wants=network-online.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+# Patrón #5: supervisión por capas — Restart=always es la capa principal.
+ExecStart=/usr/bin/python3 {{BOT_DIR}}/{{BOT_FILE}}
+WorkingDirectory={{BOT_DIR}}
+Restart=always
+RestartSec=10
+KillMode=mixed
+KillSignal=SIGTERM
+TimeoutStopSec=30
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=default.target

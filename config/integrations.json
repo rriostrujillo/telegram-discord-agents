@@ -1,0 +1,9 @@
+{
+  "clis": [
+    { "id": "opencode",   "label": "OpenCode",    "bin": "opencode", "modelsCmd": "opencode models --json" },
+    { "id": "kilocode",   "label": "Kilo Code",   "bin": "kilo",     "modelsCmd": "kilo models --json" },
+    { "id": "claudecode", "label": "Claude Code", "bin": "claude",   "modelsCmd": null },
+    { "id": "custom",     "label": "Custom CLI",  "bin": "",         "modelsCmd": null }
+  ],
+  "platforms": ["telegram", "discord"]
+}

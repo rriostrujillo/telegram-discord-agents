@@ -1,0 +1,20 @@
+[
+  {
+    "name": "mi-telegram-bot",
+    "platform": "telegram",
+    "cli": "opencode",
+    "model": "opencode-zen/big-pickle",
+    "token": "PEGAR_TOKEN_DE_BOTFATHER_AQUI",
+    "allowedUsers": "PEGAR_TU_TELEGRAM_USER_ID",
+    "workdir": "/home/TU_USUARIO"
+  },
+  {
+    "name": "mi-discord-bot",
+    "platform": "discord",
+    "cli": "claudecode",
+    "model": "claude-sonnet-4",
+    "token": "PEGAR_TOKEN_DE_DISCORD_DEVELOPER_PORTAL",
+    "allowedUsers": "PEGAR_TU_DISCORD_USER_ID",
+    "workdir": "/home/TU_USUARIO"
+  }
+]

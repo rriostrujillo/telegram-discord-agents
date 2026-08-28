@@ -1,0 +1,20 @@
+[Unit]
+Description=Discord Bot {{BOT_NAME}} — patrones Hermes
+After=network-online.target
+Wants=network-online.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+ExecStart=/home/rriostrujillo/.hermes/hermes-agent/venv/bin/python {{BOT_DIR}}/{{BOT_FILE}}
+WorkingDirectory={{BOT_DIR}}
+Restart=always
+RestartSec=10
+KillMode=mixed
+KillSignal=SIGTERM
+TimeoutStopSec=30
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=default.target

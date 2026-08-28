@@ -1,0 +1,24 @@
+# Secrets — nunca al repo
+.env
+*.token
+*.secret
+bot_state.db
+*.db
+
+# Deps
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Bots creados localmente (el repo trae solo templates)
+bots/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/

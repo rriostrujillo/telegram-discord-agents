@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Telegram / Discord Agents — Consola</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script>tailwind.config={darkMode:'class'}</script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@400;500;600;700&display=swap');
+  body{font-family:'Inter',sans-serif}
+  .mono{font-family:'JetBrains Mono',monospace}
+  .scroll{scrollbar-width:thin;scrollbar-color:#3f3f46 transparent}
+</style>
+</head>
+<body class="bg-[#0a0a0a] text-zinc-100 min-h-screen flex">
+<!-- Sidebar -->
+<aside class="w-[240px] shrink-0 bg-[#111113] border-r border-zinc-800 flex flex-col">
+  <div class="p-5 border-b border-zinc-800">
+    <div class="flex items-center gap-2">
+      <div class="w-8 h-8 rounded-lg bg-white text-black grid place-items-center font-bold text-sm">◈</div>
+      <div>
+        <div class="text-sm font-semibold leading-none">Agents</div>
+        <div class="text-[11px] text-zinc-500">Telegram / Discord</div>
+      </div>
+    </div>
+    <div class="mt-3 text-[11px] text-zinc-500 leading-relaxed">Instrumentación de skills<br><span class="text-zinc-300">telegram-bot-factory</span> + <span class="text-zinc-300">discord-bot-factory</span></div>
+  </div>
+  <nav class="p-3 space-y-1 text-sm">
+    <button data-view="dashboard" class="nav w-full text-left px-3 py-2 rounded-lg bg-zinc-800 text-white flex items-center gap-2"><i class="fa-solid fa-table-columns w-4"></i> Dashboard</button>
+    <button data-view="integrations" class="nav w-full text-left px-3 py-2 rounded-lg text-zinc-400 hover:bg-zinc-800 hover:text-white flex items-center gap-2"><i class="fa-solid fa-plug w-4"></i> Integraciones</button>
+    <button data-view="logs" class="nav w-full text-left px-3 py-2 rounded-lg text-zinc-400 hover:bg-zinc-800 hover:text-white flex items-center gap-2"><i class="fa-solid fa-terminal w-4"></i> Logs</button>
+    <button data-view="docs" class="nav w-full text-left px-3 py-2 rounded-lg text-zinc-400 hover:bg-zinc-800 hover:text-white flex items-center gap-2"><i class="fa-solid fa-book w-4"></i> Docs</button>
+  </nav>
+  <div class="mt-auto p-3 border-t border-zinc-800">
+    <div class="text-[11px] text-zinc-500">CLI detectados</div>
+    <div class="mt-2 space-y-1 text-xs">
+      <div class="flex justify-between"><span class="text-zinc-400">opencode</span><span class="text-emerald-400">● v0.8.2</span></div>
+      <div class="flex justify-between"><span class="text-zinc-400">claudecode</span><span class="text-emerald-400">● v1.1.0</span></div>
+      <div class="flex justify-between"><span class="text-zinc-400">kilocode</span><span class="text-zinc-500">○ no instalado</span></div>
+    </div>
+  </div>
+</aside>
+
+<!-- Main -->
+<main class="flex-1 flex flex-col min-w-0">
+  <!-- Topbar -->
+  <header class="h-14 border-b border-zinc-800 bg-[#111113] flex items-center justify-between px-6">
+    <div class="flex items-center gap-3">
+      <h1 id="viewTitle" class="text-sm font-semibold">Dashboard</h1>
+      <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 border border-zinc-700">repo clonable · .env local</span>
+    </div>
+    <div class="flex items-center gap-2">
+      <span class="text-xs text-zinc-500">2 bots activos</span>
+      <button onclick="openWizard()" class="text-xs bg-white text-black px-3 py-1.5 rounded-lg font-medium hover:bg-zinc-200"><i class="fa-solid fa-plus mr-1"></i> Crear bot</button>
+    </div>
+  </header>
+
+  <!-- VIEWS -->
+  <!-- Dashboard -->
+  <section id="view-dashboard" class="view flex-1 p-6 space-y-6 overflow-auto scroll">
+    <!-- KPIs -->
+    <div class="grid grid-cols-4 gap-4">
+      <div class="bg-[#18181b] border border-zinc-800 rounded-xl p-4">
+        <div class="text-[11px] tracking-widest text-zinc-500 uppercase">Bots</div>
+        <div class="text-2xl font-semibold mt-1">2 <span class="text-sm text-emerald-400 font-normal">● running</span></div>
+        <div class="text-xs text-zinc-500 mt-1">1 Telegram · 1 Discord (mock)</div>
+      </div>
+      <div class="bg-[#18181b] border border-zinc-800 rounded-xl p-4">
+        <div class="text-[11px] tracking-widest text-zinc-500 uppercase">CLI activo</div>
+        <div class="text-sm font-medium mt-1">opencode <span class="text-zinc-500">→</span> big-pickle</div>
+        <div class="text-xs text-zinc-500">switch en vivo vía /modelo</div>
+      </div>
+      <div class="bg-[#18181b] border border-zinc-800 rounded-xl p-4">
+        <div class="text-[11px] tracking-widest text-zinc-500 uppercase">Uptime</div>
+        <div class="text-2xl font-semibold mt-1">14h</div>
+        <div class="text-xs text-zinc-500">Restart=always (systemd)</div>
+      </div>
+      <div class="bg-[#18181b] border border-zinc-800 rounded-xl p-4">
+        <div class="text-[11px] tracking-widest text-zinc-500 uppercase">Mensajes hoy</div>
+        <div class="text-2xl font-semibold mt-1">27</div>
+        <div class="text-xs text-zinc-500">flood-safe, SQLite ledger</div>
+      </div>
+    </div>
+
+    <!-- Bot cards — dinámico desde /api/bots -->
+    <div id="botGrid" class="grid grid-cols-2 gap-4">
+      <div class="col-span-2 text-xs text-zinc-500 py-8 text-center">Cargando bots…</div>
+    </div>
+
+    <!-- Architecture strip -->
+    <div class="bg-[#111113] border border-zinc-800 rounded-xl p-4">
+      <div class="text-xs font-semibold mb-2">Arquitectura instrumentada</div>
+      <div class="mono text-[11px] text-zinc-400 leading-relaxed">
+        GUI (3000) → Instrumentación API → Agent Runners (telegram_runner / discord_runner) → CLI Registry [opencode · kilocode · claudecode · custom] <span class="text-zinc-600">— cada runner: ACK &lt;1s + background + SQLite + flood cap 5s + systemd</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Integrations -->
+  <section id="view-integrations" class="view hidden flex-1 p-6 space-y-4 overflow-auto scroll">
+    <div class="flex items-center justify-between">
+      <h2 class="text-sm font-semibold">Integraciones locales (CLI Registry)</h2>
+      <button onclick="toast('Re-detectando CLIs…')" class="text-xs bg-zinc-800 border border-zinc-700 px-3 py-1.5 rounded-lg">Re-detectar</button>
+    </div>
+    <p class="text-xs text-zinc-500">Autodetecta con <span class="mono bg-zinc-800 px-1 rounded">which &lt;bin&gt;</span>. El instalador escribe <span class="mono bg-zinc-800 px-1 rounded">config/integrations.json</span>. Cambiar de CLI no requiere reinstalar el bot.</p>
+    <div class="grid grid-cols-3 gap-4">
+      <div class="bg-[#18181b] border border-emerald-500/30 rounded-xl p-4">
+        <div class="flex justify-between items-start"><span class="text-sm font-semibold">OpenCode</span><span class="text-xs text-emerald-400">● instalado</span></div>
+        <div class="mono text-xs text-zinc-500 mt-1">opencode v0.8.2 · /usr/bin/opencode</div>
+        <div class="mt-3 text-xs"><div class="text-zinc-400 mb-1">Modelos</div><div class="flex flex-wrap gap-1"><span class="px-2 py-1 rounded bg-zinc-800 text-xs">big-pickle ✓</span><span class="px-2 py-1 rounded bg-zinc-800 text-xs">mimo-v2.5-free</span><span class="px-2 py-1 rounded bg-zinc-800 text-xs">laguna-s-2.1</span></div></div>
+        <button class="mt-3 w-full text-xs bg-zinc-800 border border-zinc-700 rounded-lg py-1.5">Probar: opencode run "OK"</button>
+      </div>
+      <div class="bg-[#18181b] border border-emerald-500/30 rounded-xl p-4">
+        <div class="flex justify-between items-start"><span class="text-sm font-semibold">Claude Code</span><span class="text-xs text-emerald-400">● instalado</span></div>
+        <div class="mono text-xs text-zinc-500 mt-1">claude v1.1.0 · /usr/local/bin/claude</div>
+        <div class="mt-3 text-xs text-zinc-500">Modelos vía API key de Anthropic</div>
+        <button class="mt-3 w-full text-xs bg-zinc-800 border border-zinc-700 rounded-lg py-1.5">Probar</button>
+      </div>
+      <div class="bg-[#18181b] border border-zinc-800 rounded-xl p-4 opacity-60">
+        <div class="flex justify-between items-start"><span class="text-sm font-semibold">Kilo Code</span><span class="text-xs text-zinc-500">○ no instalado</span></div>
+        <div class="mono text-xs text-zinc-500 mt-1">which kilo → no encontrado</div>
+        <div class="mt-3 text-xs text-zinc-500">Instala: <span class="mono">npm i -g kilocode</span></div>
+      </div>
+    </div>
+    <div class="bg-amber-500/10 border border-amber-500/20 rounded-xl p-4 text-xs text-amber-200">
+      <i class="fa-solid fa-circle-info mr-1"></i> Quien clone el repo solo necesita poner sus tokens en <span class="mono bg-black/30 px-1 rounded">.env</span> — el GUI detecta qué CLIs tiene localmente y adapta los dropdowns automáticamente.
+    </div>
+  </section>
+
+  <!-- Logs -->
+  <section id="view-logs" class="view hidden flex-1 p-6">
+    <div class="bg-[#111113] border border-zinc-800 rounded-xl p-4 mono text-xs leading-relaxed text-zinc-300">
+      <div class="text-zinc-500 mb-2">[agenteruloia] journalctl --user -u agenteruloia-bot -f</div>
+      08:51:07 Agenteruloia: Conectado como @Tiendaremoto_bot<br>
+      08:51:07 Application started — polling getUpdates<br>
+      08:52:34 → 8994867: "hola" → ACK 0.2s → opencode big-pickle (ses_fc17…) 84s → ✅<br>
+      <span class="text-amber-400">08:56 x-preview-f-free retirado por Zen — migrado a mimo-v2.5-free</span>
+    </div>
+  </section>
+
+  <!-- Docs -->
+  <section id="view-docs" class="view hidden flex-1 p-6 space-y-3 text-sm text-zinc-300">
+    <h2 class="font-semibold">Docs</h2>
+    <p class="text-xs text-zinc-500">Repo: <span class="mono bg-zinc-800 px-1 rounded">telegram-discord-agents/</span> — ver <span class="mono bg-zinc-800 px-1 rounded">docs/ARCHITECTURE.md</span> para el diseño completo. Instalación: <span class="mono bg-zinc-800 px-1 rounded">./installer/install.sh</span> → <span class="mono bg-zinc-800 px-1 rounded">.env</span> → <span class="mono bg-zinc-800 px-1 rounded">http://localhost:3000</span></p>
+    <div class="text-xs leading-relaxed text-zinc-400">12 patrones OpenWork/Hermes replicados: ACK inmediato, background, allowlist, SQLite, flood cap 5s, typing, batching, chunking, Views/slash, threads, auto-detect CLI.</div>
+  </section>
+</main>
+
+<!-- Wizard modal -->
+<div id="wizard" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm grid place-items-center p-6">
+  <div class="bg-[#18181b] border border-zinc-800 rounded-2xl w-full max-w-lg p-6">
+    <div class="flex justify-between items-start">
+      <h3 class="text-sm font-semibold">Crear bot</h3>
+      <button onclick="closeWizard()" class="text-zinc-500 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="mt-4 grid grid-cols-2 gap-3 text-xs">
+      <label class="space-y-1"><span class="text-zinc-400">Plataforma</span><select id="wPlatform" class="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg px-3 py-2"><option value="telegram">Telegram</option><option value="discord">Discord</option></select></label>
+      <label class="space-y-1"><span class="text-zinc-400">Nombre (slug)</span><input id="wName" placeholder="mi-bot" class="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg px-3 py-2 mono"></label>
+      <label class="col-span-2 space-y-1"><span class="text-zinc-400">Token (@BotFather / Discord Portal)</span><input id="wToken" placeholder="123456:ABC..." class="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg px-3 py-2 mono"></label>
+      <label class="space-y-1"><span class="text-zinc-400">CLI backend</span><select id="wCli" class="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg px-3 py-2"><option>opencode</option><option>claudecode</option><option>kilocode</option><option>custom</option></select></label>
+      <label class="space-y-1"><span class="text-zinc-400">Modelo inicial</span><select id="wModel" class="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg px-3 py-2"><option>big-pickle</option><option>mimo-v2.5-free</option><option>laguna-s-2.1-free</option></select></label>
+      <label class="col-span-2 space-y-1"><span class="text-zinc-400">Allowed users (IDs separados por coma)</span><input id="wUsers" placeholder="8994867" class="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg px-3 py-2 mono"></label>
+    </div>
+    <div class="mt-4 flex gap-2">
+      <button onclick="closeWizard()" class="flex-1 text-xs bg-zinc-800 border border-zinc-700 rounded-lg py-2">Cancelar</button>
+      <button onclick="createBot()" class="flex-1 text-xs bg-white text-black rounded-lg py-2 font-medium">Crear e instalar</button>
+    </div>
+    <p class="mt-3 text-[11px] text-zinc-500">Genera <span class="mono">~/bots/&lt;name&gt;/bot.py + .env + .service</span> y hace <span class="mono">systemctl --user enable --now</span>.</p>
+  </div>
+</div>
+
+<!-- Model switch -->
+<div id="modelSwitch" class="hidden fixed inset-0 bg-black/60 grid place-items-center p-6">
+  <div class="bg-[#18181b] border border-zinc-800 rounded-2xl w-full max-w-sm p-6">
+    <h3 class="text-sm font-semibold">Cambiar modelo — <span id="msBot">agenteruloia</span></h3>
+    <div class="mt-3 space-y-2 text-sm">
+      <button onclick="switchModel('ox')" class="w-full text-left px-3 py-2 rounded-lg bg-zinc-800 hover:bg-zinc-700 flex justify-between">⚡ MiMo Free <span class="text-zinc-500 text-xs">mimo-v2.5-free</span></button>
+      <button onclick="switchModel('pickle')" class="w-full text-left px-3 py-2 rounded-lg bg-white text-black">🥒 Big Pickle <span class="text-xs">● activo</span></button>
+      <button onclick="switchModel('muse')" class="w-full text-left px-3 py-2 rounded-lg bg-zinc-800 hover:bg-zinc-700 flex justify-between">🎨 Laguna Free <span class="text-zinc-500 text-xs">laguna-s-2.1</span></button>
+    </div>
+    <button onclick="closeModelSwitch()" class="mt-4 w-full text-xs bg-zinc-800 border border-zinc-700 rounded-lg py-2">Cerrar</button>
+  </div>
+</div>
+
+<div id="toast" class="hidden fixed bottom-4 left-1/2 -translate-x-1/2 bg-zinc-800 border border-zinc-700 text-xs px-3 py-2 rounded-lg"></div>
+
+<script>
+  document.querySelectorAll('.nav').forEach(b=>{
+    b.addEventListener('click',()=>{
+      document.querySelectorAll('.nav').forEach(x=>x.className='nav w-full text-left px-3 py-2 rounded-lg text-zinc-400 hover:bg-zinc-800 hover:text-white flex items-center gap-2');
+      b.className='nav w-full text-left px-3 py-2 rounded-lg bg-zinc-800 text-white flex items-center gap-2';
+      document.querySelectorAll('.view').forEach(v=>v.classList.add('hidden'));
+      document.getElementById('view-'+b.dataset.view).classList.remove('hidden');
+      document.getElementById('viewTitle').textContent=b.textContent.trim();
+    });
+  });
+  function openWizard(pref){ const w=document.getElementById('wizard'); w.classList.remove('hidden'); if(pref) document.getElementById('wPlatform').value=pref; }
+  function closeWizard(){ document.getElementById('wizard').classList.add('hidden'); }
+  function openModelSwitch(bot){ document.getElementById('msBot').textContent=bot; document.getElementById('modelSwitch').classList.remove('hidden'); }
+  function closeModelSwitch(){ document.getElementById('modelSwitch').classList.add('hidden'); }
+  function switchModel(k){ toast('Modelo cambiado a '+k+' — sesión reiniciada'); closeModelSwitch(); }
+  async function createBot(){
+    const spec={platform:document.getElementById('wPlatform').value,name:document.getElementById('wName').value,token:document.getElementById('wToken').value,cli:document.getElementById('wCli').value,model:document.getElementById('wModel').value,allowedUsers:document.getElementById('wUsers').value};
+    if(!spec.name||!spec.token){ toast('Completa nombre y token'); return; }
+    try{
+      const r=await fetch('/api/bots',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(spec)});
+      const j=await r.json();
+      if(!r.ok) throw new Error(j.error||'error');
+      toast('✅ Bot '+spec.name+' creado — systemctl enable --now '+spec.name);
+      closeWizard();
+      loadBots();
+    }catch(e){ toast('❌ '+e.message); }
+  }
+  async function loadBots(){
+    const grid=document.getElementById('botGrid');
+    const kpi=document.querySelector('#view-dashboard .grid-cols-4 > div:first-child .text-2xl');
+    try{
+      const r=await fetch('/api/bots'); const bots=await r.json();
+      if(!bots.length){
+        grid.innerHTML='<div class="col-span-2 bg-[#18181b] border border-dashed border-zinc-800 rounded-xl p-8 text-center text-sm text-zinc-500">Aún no hay bots — usa <b class="text-zinc-300">Crear bot</b> para empezar.</div>';
+        if(kpi) kpi.innerHTML='0 <span class="text-sm text-zinc-500 font-normal">— sin bots</span>';
+        return;
+      }
+      if(kpi){
+        const running=bots.filter(b=>b.status==='active').length;
+        kpi.innerHTML=`${bots.length} <span class="text-sm ${running?'text-emerald-400':'text-zinc-500'} font-normal">● ${running} running</span>`;
+      }
+      grid.innerHTML=bots.map(b=>{
+        const isDiscord=b.platform==='discord';
+        const bg=isDiscord?'bg-[#5865F2]':'bg-[#229ED9]';
+        const icon=isDiscord?'fa-discord':'fa-telegram';
+        const active=b.status==='active';
+        const badge=active
+          ?'<span class="text-[11px] px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-400 border border-emerald-500/20">● running</span>'
+          :'<span class="text-[11px] px-1.5 py-0.5 rounded bg-zinc-800 text-zinc-400 border border-zinc-700">○ stopped</span>';
+        return `<div class="bg-[#18181b] border border-zinc-800 rounded-xl p-5 flex flex-col">
+          <div class="flex items-start justify-between">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-xl ${bg} grid place-items-center text-white"><i class="fa-brands ${icon}"></i></div>
+              <div>
+                <div class="text-sm font-semibold flex items-center gap-2">${b.name} ${badge}</div>
+                <div class="text-xs text-zinc-500">${b.platform} · ${b.status}</div>
+              </div>
+            </div>
+            <span class="text-[11px] text-zinc-500 mono">${b.name}</span>
+          </div>
+          <div class="mt-4 flex gap-2">
+            <button onclick="fetch('/api/bots/${b.name}/logs').then(r=>r.text()).then(t=>{document.querySelector('#view-logs .mono').textContent=t.slice(-2000); document.querySelector('[data-view=logs]').click()})" class="flex-1 text-xs bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-lg py-2">Ver logs</button>
+            <button onclick="openModelSwitch('${b.name}')" class="flex-1 text-xs bg-white text-black rounded-lg py-2 font-medium">Cambiar modelo</button>
+          </div>
+        </div>`;
+      }).join('');
+      // si solo hay 1 bot, añade card para crear el otro
+      if(bots.length===1 && !bots.find(b=>b.platform==='discord')){
+        grid.innerHTML+=`<div class="bg-[#18181b] border border-dashed border-zinc-800 rounded-xl p-5 flex flex-col">
+          <div class="text-sm font-semibold">Añadir Discord</div>
+          <div class="text-xs text-zinc-500 mt-1">Crea tu bot de Discord con el mismo wizard.</div>
+          <button onclick="openWizard('discord')" class="mt-4 text-xs bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-lg py-2">Crear bot de Discord</button>
+        </div>`;
+      }
+    }catch(e){ grid.innerHTML='<div class="col-span-2 text-xs text-red-400">Error cargando bots: '+e.message+'</div>'; }
+  }
+  async function loadClis(){
+    try{
+      const r=await fetch('/api/clis'); const clis=await r.json();
+      console.log('clis',clis);
+    }catch{}
+  }
+  loadBots(); loadClis();
+  function toast(m){ const t=document.getElementById('toast'); t.textContent=m; t.classList.remove('hidden'); setTimeout(()=>t.classList.add('hidden'),3500); }
+</script>
+</body>
+</html>
