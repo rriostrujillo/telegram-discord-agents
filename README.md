@@ -18,7 +18,7 @@ Crea y opera bots de **Telegram** y **Discord** con los 12 patrones de producci�
 ## 🚀 Instalación
 
 ```bash
-git clone https://github.com/TU_USUARIO/telegram-discord-agents.git
+git clone https://github.com/rriostrujillo/telegram-discord-agents.git
 cd telegram-discord-agents
 ./installer/install.sh          # Linux/macOS
 # o
@@ -29,7 +29,7 @@ cp .env.example .env            # pega tus tokens
 
 # Opción A: con el server (GUI + API en 8899)
 cd app/server && npm install && npm start
-# abre http://localhost:8899 — o http://TU_ZEROTIER_IP:8899 si es remota
+# abre http://localhost:8899 — o http://TU_VPN_IP:8899 si es remota
 
 # Opción B: solo prototipo estático (sin API)
 xdg-open app/gui/index.html
